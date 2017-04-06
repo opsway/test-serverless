@@ -1,4 +1,4 @@
-const getEvents = require('./getEvents/exports').handler;
+const getEvents = require('./getEventsFromAWS/exports').handler;
 
 getEvents({
   queryStringParameters: {
