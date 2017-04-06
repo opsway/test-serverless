@@ -3,6 +3,7 @@ $(document).ready(() => {
     type: 'GET',
     url: 'https://gyqv2q06tb.execute-api.eu-central-1.amazonaws.com/development/events',
     success: events => {
+      console.log('success response: ', events);
       $('#table').append('<table class="table-bordered"/>');
   
       events.forEach(event => {
