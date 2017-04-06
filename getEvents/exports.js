@@ -36,7 +36,9 @@ exports.handler = (event, context, callback) => {
       statusCode: 200,
       body: JSON.stringify(records),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Method' : 'GET, OPTION',
+        'Access-Control-Allow-Origin' : '*'
       }
     });
   });
