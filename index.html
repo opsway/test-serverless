@@ -10,7 +10,13 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div id="table" class="container"></div>
+  <div id="position" class="container"></div>
+  <div id="form" class="container">
+    Радиус поиска (км)
+    <input type="number" id="r" min="0" max="100000" value="100000">
+    <input type="button" onclick="search()" value="найти">
+  </div>
+  <div id="app" class="container"></div>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"
       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous">
