@@ -19,3 +19,13 @@
   /* Add a grey background color to the table header and on hover */
   background-color: #f1f1f1;
 }
+
+.image {
+  height: 150px;
+}
+
+#spinner {
+  position: absolute;
+  margin-left: 45%;
+  margin-top: 300px;
+}

@@ -2,10 +2,11 @@ const fields = [
 '#',
 'Название',
 'Описание',
-'Дата создания',
+'Дата проведения',
 'Место',
 'Координаты',
 'Сайт',
+'Картинка',
 ];
 
 var x = document.getElementById("position");
@@ -22,6 +23,14 @@ const getLocation = () => {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
+
+$( document ).ajaxStart(function() {
+  $('#spinner').show();
+});
+
+$( document ).ajaxStop(function() {
+  $('#spinner').hide();
+});
 
 const renderTable = (params) => {
   $.ajax({
@@ -45,11 +54,16 @@ const renderTable = (params) => {
         const fields = event.fields;
         const fieldsCounter = Object.keys(fields).length;
         
-        if (fieldsCounter == 8) {
+        if (fieldsCounter == 8 || fieldsCounter == 7) {
           const tr = $('<tr/>');
           for (let prop in fields) {
-            if (prop !== 'Category') {
+            if (prop !== 'Picture') {
               const td = $('<td>').text(fields[prop]);
+              tr.append(td);
+            } else {
+              const td = $('<td>');
+              const img = $(`<img src="${fields[prop][0].url}" class="image">`);
+              td.append(img);
               tr.append(td);
             }
           }
