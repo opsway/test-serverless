@@ -1,9 +1,9 @@
-const getEvents = require('./getEventsFromAWS/exports').handler;
+const getEvents = require('./getEvents/exports').handler;
 
 getEvents({
   queryStringParameters: {
-    lat: 59.975007,
-    lon: 30.284635,
-    searchRadius: 11000,
+    lat: 50.461001,
+    lon: 30.351268,
+    searchRadius: 100,
   }
 }, {}, (err, v) => console.log('err ', err, 'v ', v));

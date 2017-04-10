@@ -8,7 +8,7 @@ exports.handler = (event, context, callback) => {
   base('Events').select({
     view: 'Grid view',
     maxRecords: 99999999,
-    fields: ["ID", "Title", "Description", "Category", "Date", "Location", "Geoposition", "Site"],
+    fields: ["ID", "Title", "Description", "Category", "Date", "Location", "Geoposition", "Site", "Picture"],
     sort: [{ field: "Date", direction: "desc"}],
   }).firstPage((err, records) => {
     if (err) {
@@ -16,7 +16,9 @@ exports.handler = (event, context, callback) => {
         statusCode: 500,
         body: JSON.stringify(err),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Request-Method' : 'GET, OPTION',
+          'Access-Control-Allow-Origin' : '*',
         }
       });
     }
@@ -28,7 +30,7 @@ exports.handler = (event, context, callback) => {
         if (!record.fields.Geoposition) return false;
         
         const distance = getDistance(parseFloat(queryStringParameters.lat), parseFloat(queryStringParameters.lon), record.fields.Geoposition);
-        return distance.human_readable().distance <= queryStringParameters.searchRadius;
+        return distance.human_readable().distance <= parseInt(queryStringParameters.searchRadius);
       });
     }
     

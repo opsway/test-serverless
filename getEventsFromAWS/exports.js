@@ -13,7 +13,9 @@ exports.handler = (event, context, callback) => {
           statusCode: 500,
           body: JSON.stringify(err),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Request-Method' : 'GET, OPTION',
+            'Access-Control-Allow-Origin' : '*',
           }
         });
       }
