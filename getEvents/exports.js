@@ -8,7 +8,7 @@ exports.handler = (event, context, callback) => {
   base('Events').select({
     view: 'Grid view',
     maxRecords: 99999999,
-    fields: ["ID", "Title", "Description", "Category", "Date", "Location", "Geoposition", "Site", "Picture"],
+    fields: ["ID", "Title", "Description", "Date", "Location", "Geoposition", "Site", "Picture"],
     sort: [{ field: "Date", direction: "desc"}],
   }).firstPage((err, records) => {
     if (err) {
