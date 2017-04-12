@@ -16,9 +16,19 @@
   </div>
   <div id="position" class="container"></div>
   <div id="form" class="container">
-    Радиус поиска (км)
-    <input type="number" id="r" min="0" max="100000" value="100000">
-    <input type="button" onclick="search()" value="найти">
+    <div>
+      <span>Категория: </span>
+      <select id='categories'>
+        <option value="0" selected>Все</option>
+      </select>
+    </div>
+    <div>
+      <span>Радиус поиска: <span id="radiusValue">10000</span> (км)</span>
+      <input type="range" id="r" min="0" max="10000" step="1" value="10000" oninput="radiusChange(this.value)" onchange="radiusChange(this.value)">
+    </div>
+    <div>
+      <input type="button" onclick="search()" value="найти">
+    </div>
   </div>
   <div id="app" class="container"></div>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"

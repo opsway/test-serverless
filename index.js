@@ -32,6 +32,23 @@ $( document ).ajaxStop(function() {
   $('#spinner').hide();
 });
 
+const renderSelectBox = () => {
+  $.ajax({
+    type: 'GET',
+    url: 'https://gyqv2q06tb.execute-api.eu-central-1.amazonaws.com/development/categories',
+    success: categories => {
+      categories.forEach(category => {
+        if (category.fields.Name) {
+          $('#categories').append($('<option>', {
+            value: category.id,
+            text: category.fields.Name,
+          }));
+        }
+      });
+    }
+  });
+};
+
 const renderTable = (params) => {
   $.ajax({
     type: 'GET',
@@ -39,7 +56,7 @@ const renderTable = (params) => {
     data: params,
     success: events => {
       $('#app').append('<table class="table-bordered" id="table">');
-      
+
       const thead = $('<thead>')
       const tr = $('<tr class="header">');
       fields.forEach(field => {
@@ -48,12 +65,12 @@ const renderTable = (params) => {
       });
       thead.append(tr);
       $('#app table').append(thead);
-      
+
       const tbody = $('<tbody>');
       events.forEach(event => {
         const fields = event.fields;
         const fieldsCounter = Object.keys(fields).length;
-        
+
         if (fieldsCounter == 8 || fieldsCounter == 7) {
           const tr = $('<tr/>');
           for (let prop in fields) {
@@ -70,7 +87,7 @@ const renderTable = (params) => {
           tbody.append(tr);
         }
       });
-      
+
       $('#app table').append(tbody);
     }
   });
@@ -79,14 +96,31 @@ const renderTable = (params) => {
 const search = () => {
   $('#app')[0].innerHTML = '';
   navigator.geolocation.getCurrentPosition(position => {
+    const params = {};
     const lat = position.coords.latitude.toFixed(6);
     const lon = position.coords.longitude.toFixed(6);
     const searchRadius = $('#r')[0].value;
-    if (lat && lon && searchRadius) {
-      renderTable({ lat, lon, searchRadius });
+
+    const category = $('#categories').val();
+
+    if (category !== '0') {
+      params.category = category;
     }
+
+    if (lat && lon && searchRadius) {
+      params.lat = lat;
+      params.lon = lon;
+      params.searchRadius = searchRadius;
+    }
+
+    renderTable(params);
   });
 };
 
+const radiusChange = val => {
+  $('#radiusValue').text(val);
+};
+
+renderSelectBox();
 getLocation();
 renderTable();
