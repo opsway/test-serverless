@@ -8,7 +8,7 @@ exports.handler = (event, context, callback) => {
   base('Events').select({
     view: 'Grid view',
     maxRecords: 99999999,
-    fields: ["ID", "Title", "Description", "Date", "Location", "Geoposition", "Site", "Picture"],
+    fields: ["ID", "Title", "Description", "Date", "Location", "Geoposition", "Site", "Picture", "Category"],
     sort: [{ field: "Date", direction: "desc"}],
   }).firstPage((err, records) => {
     if (err) {
@@ -25,6 +25,16 @@ exports.handler = (event, context, callback) => {
     
     records = records.map(record => record._rawJson);
     
+    if (queryStringParameters.category) {
+      records = records.filter(record => {
+        if (record.fields.Category) {
+          return (record.fields.Category.indexOf(queryStringParameters.category) !== -1);
+        }
+        
+        return false;
+      });
+    }
+    
     if (queryStringParameters && queryStringParameters.lat && queryStringParameters.lon && queryStringParameters.searchRadius) {
       records = records.filter(record => {
         if (!record.fields.Geoposition) return false;
@@ -33,6 +43,11 @@ exports.handler = (event, context, callback) => {
         return distance.human_readable().distance <= parseInt(queryStringParameters.searchRadius);
       });
     }
+  
+    records = records.map(record => {
+      delete record.fields.Category;
+      return record;
+    });
     
     callback(null, {
       statusCode: 200,
