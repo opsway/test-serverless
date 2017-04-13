@@ -11,6 +11,9 @@ const fields = [
 
 var x = document.getElementById("position");
 
+x.innerHTML = "Latitude: -" +
+    "<br> Longitude: -";
+
 const showPosition = position => {
   x.innerHTML = "Latitude: " + position.coords.latitude.toFixed(6) +
     "<br> Longitude: " + position.coords.longitude.toFixed(6);
