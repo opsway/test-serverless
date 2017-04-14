@@ -99,6 +99,7 @@ const renderTable = (params) => {
 const search = () => {
   $('#app')[0].innerHTML = '';
   navigator.geolocation.getCurrentPosition(position => {
+    console.log('inside getCurrentPosition');
     const params = {};
     const lat = position.coords.latitude.toFixed(6);
     const lon = position.coords.longitude.toFixed(6);
@@ -116,6 +117,14 @@ const search = () => {
       params.searchRadius = searchRadius;
     }
 
+    renderTable(params);
+  }, () => {
+    const params = {};
+    const category = $('#categories').val();
+    if (category !== '0') {
+      params.category = category;
+    }
+  
     renderTable(params);
   });
 };
